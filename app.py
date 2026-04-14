@@ -1,7 +1,7 @@
 #--------------import---------------------------
 
 import streamlit as st
-from langgraph_backend import chatbot, generate_title_llm
+from langgraph_backend import chatbot, generate_title_llm,retrieve_all_threads
 from langchain_core.messages import HumanMessage
 import uuid
 
@@ -38,7 +38,7 @@ if 'thread_id' not in st.session_state:
     st.session_state['thread_id'] = generate_thread_id()
 
 if 'chat_thread' not in st.session_state:
-    st.session_state['chat_thread']=[]
+    st.session_state['chat_thread']=retrieve_all_threads()
 
 if 'chat_titles' not in st.session_state:
     st.session_state['chat_titles'] = {}
@@ -105,6 +105,6 @@ if user_input:
 
     st.session_state['message_history'].append({'role': 'assistant', 'content': ai_message})
  
-
+    
 
 
