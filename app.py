@@ -1,7 +1,7 @@
 #--------------import---------------------------
 
 import streamlit as st
-from langgraph_backend import chatbot
+from langgraph_backend import chatbot, generate_title_llm
 from langchain_core.messages import HumanMessage
 import uuid
 
@@ -23,7 +23,8 @@ def add_thread(thread_id):
         st.session_state['chat_thread'].append(thread_id)
 
 def load_conversation(thread_id):
-    return chatbot.get_state( config={'configurable': {'thread_id': thread_id}}).values['messages']
+    state = chatbot.get_state(config={'configurable': {'thread_id': thread_id}})
+    return state.values.get('messages', [])   
    
 
 #------------------session setup---------------------------
@@ -39,6 +40,9 @@ if 'thread_id' not in st.session_state:
 if 'chat_thread' not in st.session_state:
     st.session_state['chat_thread']=[]
 
+if 'chat_titles' not in st.session_state:
+    st.session_state['chat_titles'] = {}
+
 add_thread(st.session_state['thread_id'])
 
 
@@ -53,7 +57,8 @@ if st.sidebar.button('NEW CHAT'):
 st.sidebar.header('My Conversations')
 
 for thread_id in st.session_state['chat_thread'][::-1]:
-    if st.sidebar.button(str(thread_id)):
+    title = st.session_state['chat_titles'].get(thread_id, "New Chat")
+    if st.sidebar.button(title, key=str(thread_id)):
        st.session_state['thread_id']=thread_id
        messsages = load_conversation(thread_id)
        temp_messages=[]
@@ -78,6 +83,11 @@ for message in st.session_state['message_history']:
 user_input=st.chat_input("type here...")
 
 if user_input:
+    thread_id = st.session_state['thread_id']
+
+    if thread_id not in st.session_state['chat_titles']:
+      title = generate_title_llm(user_input)
+    st.session_state['chat_titles'][thread_id] = title
     #first add the message in the message history
     st.session_state['message_history'].append({'role':'user','content':user_input})
     with st.chat_message("user"):

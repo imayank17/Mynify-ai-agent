@@ -14,6 +14,17 @@ load_dotenv()
 api_key=os.getenv("OPENROUTER_API_KEY")
 llm=ChatOpenAI(api_key=api_key,base_url="https://openrouter.ai/api/v1",model='openai/gpt-4o-mini')
 
+def generate_title_llm(user_input):
+    prompt = f"""
+    Generate a concise 3-5 word title for the following user query.
+    Do NOT include punctuation. Only return the title.
+
+    Query: {user_input}
+    """
+
+    response = llm.invoke(prompt)
+    return response.content.strip()
+
 
 class ChatState(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
