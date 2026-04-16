@@ -101,7 +101,6 @@ streamlit run app.py
 ## 🔐 Environment Variables
 - `OPENROUTER_API_KEY` — API key for OpenRouter-backed LLM and embeddings
 
-> Add additional variables or secret keys here as needed for deployment.
 
 ---
 
