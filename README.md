@@ -30,11 +30,12 @@ Mynify AI Agent is a production-ready conversational AI system built with LangGr
 ## 🏗️ Architecture
 Mynify AI Agent separates the system into front-end and backend components:
 
-- `app.py` and `frontend.py` provide Streamlit-based interfaces
-- `langgraph_backend.py` contains the LangGraph state machine, tool orchestration, and multi-threaded chat persistence
-- `rag_backend.py` powers PDF ingestion, FAISS retrieval, and context-aware RAG responses
+- `frontend.py` provide Streamlit-based interfaces
+-  contains the LangGraph state machine, tool orchestration, and multi-threaded chat persistence
+- `rag_backend.py` contains the LangGraph state machine, tool orchestration, and multi-threaded chat
+    persistence,   powers PDF ingestion, FAISS retrieval, and context-aware RAG responses
 - `chatbot.db` stores LangGraph checkpoints and thread state
-- Streamlit handles UI, thread switching, new chat creation, and live response streaming
+
 
 The system routes user messages through a LangGraph state graph, optionally invokes tools, and persists conversation state per thread for seamless context recovery.
 
@@ -53,9 +54,8 @@ The system routes user messages through a LangGraph state graph, optionally invo
 ---
 
 ## 📂 Project Structure
-- `app.py` — primary Streamlit chatbot UI using `langgraph_backend.py`
 - `frontend.py` — PDF-aware Streamlit interface for RAG-enabled chat
-- `langgraph_backend.py` — core LangGraph graph, tool integration, thread checkpointing
+- `langgraph_backend.py` — core LangGraph graph, tool integration, thread checkpointing for testing
 - `rag_backend.py` — RAG pipeline, PDF ingestion, FAISS retrievers, and tool definitions
 - `requirements.txt` — dependency manifest
 - `chatbot.db` — SQLite state persistence for chat threads
@@ -80,16 +80,11 @@ OPENROUTER_API_KEY=your_openrouter_api_key
 ```
 
 ### 3. Run the app
-Choose one of the Streamlit frontends:
+
 ```bash
 streamlit run app.py
-```
 
-Or run the RAG-enabled frontend:
-```bash
-streamlit run frontend.py
 ```
-
 ---
 
 ## 🧪 Example Usage
@@ -102,30 +97,11 @@ streamlit run frontend.py
 
 ---
 
-## 📸 Screenshots
-> Add screenshots here once available
-
-- `screenshot-1.png` — main chat view
-- `screenshot-2.png` — thread selector and history
-- `screenshot-3.png` — PDF ingestion / RAG workflow
-- `screenshot-4.png` — tool execution feedback
-
----
 
 ## 🔐 Environment Variables
 - `OPENROUTER_API_KEY` — API key for OpenRouter-backed LLM and embeddings
 
 > Add additional variables or secret keys here as needed for deployment.
-
----
-
-## 📈 Future Improvements
-- Add REST API endpoints for programmatic access
-- Implement user authentication and workspace isolation
-- Improve memory and long-term context management
-- Add richer tool plugins and external knowledge sources
-- Replace local checkpoint DB with managed cloud storage
-- Extend support for more document types and embeddings backends
 
 ---
 
@@ -136,11 +112,6 @@ Contributions and improvements are welcome.
 2. Create a feature branch
 3. Submit a pull request with clear changelog notes
 4. Keep changes modular and maintain production-readiness
-
----
-
-## 📄 License
-Add a `LICENSE` file to define the project license and terms.
 
 ---
 
